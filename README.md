@@ -78,12 +78,3 @@ _JavaScript Functionality:_
 4. Responsive Design Implementation:
 
 5. Image Management System:
-
-
-**Performance Optimization:**__
-
-> Efficient CSS with minimal redundancy
-> Optimized JavaScript for fast execution
->I mage compression and proper sizing
->  Minimal external dependencies
-> Clean code structure for easy maintenance
