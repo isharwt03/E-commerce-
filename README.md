@@ -1,4 +1,4 @@
-# E-commerce
+# E-commerce ( SPICELIGHT By MLI )
 ### Project Overview:
 Development of a comprehensive e-commerce website called "Spice Light by MLI " for Mahalaxmi Industries,
 featuring their complete range of electrical products including LED lights, batteries, and lighting accessories.
