@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpiceLight - Lights, LEDs & Batteries</title>
+      <link rel="icon" type="image/png" href="/Users/isharwt/Downloads/1721027475273.jpeg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-image: url("/Users/isharwt/Downloads/pforphoto-7154048.jpg");
+           
+        }
+
+        .header {
+
+            background: linear-gradient(135deg, #6c7084 0%, #240b3d 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 0.5rem;
+            border-radius: 100px;
+            min-width: 260px;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            padding: 0.5rem 1rem;
+            flex-grow: 1;
+            border-radius: 20px;
+            font-size: 1rem;
+        }
+
+        .search-btn {
+            background: #112798;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-btn:hover {
+            background: #5a6fd8;
+        }
+
+        .cart-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cart-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .cart-btn:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                        url(data:image/svg+xml,<svg xmlns="data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%23667eea" width="1200" height="400"/><circle fill="%23764ba2" cx="200" cy="100" r="50" opacity="0.3"/><circle fill="%23667eea" cx="800" cy="150" r="80" opacity="0.2"/><circle fill="%23764ba2" cx="1000" cy="250" r="60" opacity="0.3"/></svg>');
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+            background-size: cover;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .filters {
+            background: white;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .filter-group select {
+            padding: 0.5rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .products-section {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            height: 200px;
+            background: linear-gradient(45deg, #ea9266, #411f63);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::before {
+            content: '💡';
+            font-size: 4rem;
+            opacity: 0.8;
+        }
+        .product-image.smartled::before{content:url("/Users/isharwt/Downloads/the-light-bulb-4498788_640.jpg") ;}
+        .product-image.led::before { content:url("/Users/isharwt/Downloads/led-2953664_640.jpg"); }
+        .product-image.battery::before { content:url("/Users/isharwt/Downloads/pexels-wutthichai-charoenburi-553075115-19810747.jpg"); }
+        .product-image.carbattery::before { content:url("/Users/isharwt/Downloads/12v-65-ah.jpeg"); }
+        .product-image.light::before { content:url("/Users/isharwt/Downloads/Untitled_design_-_2024-05-17T174344.711.png copy.tiff"); }
+        .product-image.ledPro::before{ content:url("/Users/isharwt/Downloads/2B38DE31-C1D3-4339-8808D61972976EE4_source.jpg copy.png");}
+        .product-image.lightPro::before { content:url("/Users/isharwt/Downloads/light-bulbs.jpg"); }
+        .product-image.torch::before { content:url("/Users/isharwt/Downloads/LED-Rechargeable-Torch.jpg"); }
+        .product-image.tubelight::before{ content:url("/Users/isharwt/Downloads/neon-tube-269365_640.jpg")}
+        
+         .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff4757;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-category {
+            color: #ea6678;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+            color: #333;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .product-specs {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #27ae60;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1rem;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f1f2f6;
+            color: #333;
+            border: 2px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e1e2e6;
+            border-color: #ccc;
+        }
+
+  
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+        }
+
+        .cart-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-total {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid #667eea;
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .search-bar {
+                min-width: 250px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1rem;
+            }
+
+            .product-actions {
+                flex-direction: column;
+            }
+        }
+
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateX(300px);
+            transition: transform 0.3s;
+            z-index: 1500;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="logo">⚡ SpiceLight by MLI</a>
+            <div class="search-bar">
+                <input type="text" placeholder="Search lights, LEDs, batteries..." id="searchInput">
+                <button class="search-btn" onclick="searchProducts()">Search</button>
+            </div>
+            <div class="cart-section">
+                <button class="cart-btn" onclick="toggleCart()">
+                    🛒 Cart
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+
+    <section class="hero">
+        <h1>Premium Electrical Products</h1>
+        <p>Discover our wide range of LED lights, batteries, and electrical accessories. Quality products at competitive prices with fast delivery.</p>
+    </section>
+
+
+    <section class="filters">
+        <div class="filter-row">
+            <div class="filter-group">
+                <label>Category</label>
+                <select id="categoryFilter" onchange="filterProducts()">
+                    <option value="all">All Categories</option>
+                    <option value="led">LED Lights</option>
+                    <option value="battery">Batteries</option>
+                    <option value="tubelight">Tubelight</option>
+                    <option value="carbattery">Car Batteries</option>
+                    <option value="light">Lighting</option>
+                    <option value="lightPro">Lighting</option>
+                    <option value="smartled">Smart Led</option>
+                    <option value="ledpro">LED Pro Lights</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Price Range</label>
+                <select id="priceFilter" onchange="filterProducts()">
+                    <option value="all">All Prices</option>
+                    <option value="0-50">₹0 - ₹50</option>
+                    <option value="50-200">₹50 - ₹200</option>
+                    <option value="200-500">₹200 - ₹500</option>
+                    <option value="500+">₹500+</option>
+                </select>
+            </div>
+           
+        </div>
+    </section>
+
+
+    <section class="products-section">
+        <h2 class="section-title" style="color: #f5f0f0;">Featured Products</h2>
+        <div class="products-grid" id="productsGrid">
+      
+        </div>
+    </section>
+
+
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>Shopping Cart</h3>
+                <button class="close-btn" onclick="toggleCart()">&times;</button>
+            </div>
+            <div id="cartItems">
+                <p style="text-align: center; color: #666;">Your cart is empty</p>
+            </div>
+            <div class="cart-total" id="cartTotal">Total: ₹0</div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="checkout()">
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
+
+
+    <div class="notification" id="notification">
+        Product added to cart!
+    </div>
+
+    <script>
+        // Product Data
+        const products = [
+            {
+                id: 1,
+                name: "LED Bulb 9W",
+                category: "ledPro",
+                brand: "philips",
+                price: 150,
+                originalPrice: 200,
+                description: "Energy-efficient LED bulb with warm white light",
+                specs: "9W • 810 Lumens • B22 Base • 15000 hrs",
+                badge: "Best Seller"
+            },
+            {
+                id: 2,
+                name: "LED Strip 5M",
+                category: "led",
+                brand: "osram",
+                price: 850,
+                originalPrice: 1200,
+                description: "RGB LED strip with remote control",
+                specs: "5M Length • RGB Colors • Remote Control • Adhesive",
+                badge: "New"
+            },
+            {
+                id: 3,
+                name: "Energizer AA Battery Pack",
+                category: "battery",
+                brand: "energizer",
+                price: 240,
+                originalPrice: 300,
+                description: "Long-lasting alkaline batteries pack of 8",
+                specs: "AA Size • 8 Pack • Alkaline • 10 Year Shelf Life",
+                badge: "Popular"
+            },
+            {
+                id: 4,
+                name: "Tubelight AAA+",
+                category: "tubelight",
+                brand: "eatho",
+                price: 1800,
+                originalPrice: 220,
+                description: "Premium alkaline AAA batteries pack of 6",
+                specs: "AAA Size • 6 Pack • Alkaline • Long Lasting",
+                badge: "Quality"
+            },
+            {
+                id: 5,
+                name: "LED Panel Light 18W",
+                category: "lightPro",
+                brand: "philips",
+                price: 650,
+                originalPrice: 800,
+                description: "Square LED panel for ceiling mounting",
+                specs: "18W • 1440 Lumens • Square • Cool White",
+                badge: "Energy Saver"
+            },
+            {
+                id: 6,
+                name: "Rechargeable LED Torch",
+                category: "torch",
+                brand: "energizer",
+                price: 420,
+                originalPrice: 550,
+                description: "Powerful rechargeable LED flashlight",
+                specs: "LED Torch • Rechargeable • USB Charging • 500m Range",
+                badge: "Portable"
+            },
+            {
+                id: 7,
+                name: "Smart WiFi LED Strip 10M",
+                category: "led",
+                brand: "philips",
+                price: 1200,
+                originalPrice: 1500,
+                description: "WiFi enabled smart LED bulb with app control",
+                specs: "12W • WiFi Enabled • App Control • Color Changing",
+                badge: "Smart"
+            },
+            {
+                id: 8,
+                name: "Car Battery 12V 45Ah",
+                category: "carbattery",
+                brand: "energizer",
+                price: 3500,
+                originalPrice: 4200,
+                description: "Heavy duty car battery for all vehicles",
+                specs: "12V • 45Ah • Maintenance Free • 3 Year Warranty",
+                badge: "Heavy Duty"
+            },
+            {
+                id: 9,
+                name: "LED Street Light 30W",
+                category: "smartled",
+                brand: "osram",
+                price: 2800,
+                originalPrice: 3500,
+                description: "High power LED street light with sensor",
+                specs: "30W • 3600 Lumens • Motion Sensor • IP65 Rated",
+                badge: "Professional"
+            }
+        ];
+
+        let cart = [];
+        let filteredProducts = [...products];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            displayProducts(products);
+        });
+
+        // Display Products
+        function displayProducts(productsToShow) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+
+            productsToShow.forEach(product => {
+                const productCard = `
+                    <div class="product-card" data-category="${product.category}" data-brand="${product.brand}" data-price="${product.price}">
+                        <div class="product-image ${product.category}">
+                            <div class="product-badge">${product.badge}</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-category">${product.category.toUpperCase()}</div>
+                            <h3 class="product-name">${product.name}</h3>
+                            <p class="product-description">${product.description}</p>
+                            <div class="product-specs">${product.specs}</div>
+                            <div class="product-price">
+                                <span class="price">₹${product.price}</span>
+                                <span class="original-price">₹${product.originalPrice}</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-primary" onclick="addToCart(${product.id})">
+                                    Add to Cart
+                                </button>
+                                <button class="btn btn-secondary" onclick="viewProduct(${product.id})">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += productCard;
+            });
+        }
+
+        // Filter Products
+        function filterProducts() {
+            const category = document.getElementById('categoryFilter').value;
+            const price = document.getElementById('priceFilter').value;
+            const brand = document.getElementById('brandFilter').value;
+
+            filteredProducts = products.filter(product => {
+                let matches = true;
+
+                if (category !== 'all' && product.category !== category) {
+                    matches = false;
+                }
+
+                if (brand !== 'all' && product.brand !== brand) {
+                    matches = false;
+                }
+
+                if (price !== 'all') {
+                    const [min, max] = price.includes('+') ? [parseInt(price), Infinity] : price.split('-').map(Number);
+                    if (product.price < min || product.price > max) {
+                        matches = false;
+                    }
+                }
+
+                return matches;
+            });
+
+            displayProducts(filteredProducts);
+        }
+
+        // Search Products
+        function searchProducts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (!searchTerm) {
+                displayProducts(products);
+                return;
+            }
+
+            const searchResults = products.filter(product =>
+                product.name.toLowerCase().includes(searchTerm) ||
+                product.description.toLowerCase().includes(searchTerm) ||
+                product.category.toLowerCase().includes(searchTerm) ||
+                product.brand.toLowerCase().includes(searchTerm)
+            );
+
+            displayProducts(searchResults);
+        }
+
+        // Add to Cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({...product, quantity: 1});
+            }
+
+            updateCartDisplay();
+            showNotification('Product added to cart!');
+        }
+
+        // Update Cart Display
+        function updateCartDisplay() {
+            const cartCount = document.getElementById('cartCount');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p style="text-align: center; color: #666;">Your cart is empty</p>';
+                cartTotal.textContent = 'Total: ₹0';
+                return;
+            }
+
+            let cartHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                cartHTML += `
+                    <div class="cart-item">
+                        <div>
+                            <div style="font-weight: bold;">${item.name}</div>
+                            <div style="color: #666; font-size: 0.9rem;">₹${item.price} × ${item.quantity}</div>
+                        </div>
+                        <div style="font-weight: bold;">₹${itemTotal}</div>
+                    </div>
+                `;
+            });
+
+            cartItems.innerHTML = cartHTML;
+            cartTotal.textContent = `Total: ₹${total}`;
+        }
+
+        // Toggle Cart Modal
+        function toggleCart() {
+            const modal = document.getElementById('cartModal');
+            modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Show Notification
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2000);
+        }
+
+        // View Product (placeholder)
+        function viewProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            alert(`Viewing details for: ${product.name}\n\nThis would open a detailed product page in a real application.`);
+        }
+
+        // Checkout (placeholder)
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            
+            alert('Proceeding to checkout...\n\nIn a real application, this would redirect to the payment page.');
+            cart = [];
+            updateCartDisplay();
+            toggleCart();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('cartModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                toggleCart();
+            }
+        });
+
+        // Search on Enter key
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchProducts();
+            }
+        });
+    </script>
+</body>
+</html>
